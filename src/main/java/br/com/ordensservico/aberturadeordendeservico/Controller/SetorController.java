@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.ordensservico.aberturadeordendeservico.model.Setor;
 import br.com.ordensservico.aberturadeordendeservico.service.ServiceSetor;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/setores")
@@ -23,7 +24,7 @@ public class SetorController {
     // Cadastrar setor
     @PostMapping
     public ResponseEntity<Setor> cadastrar(
-            @RequestBody Setor setor) {
+            @Valid @RequestBody Setor setor) {
 
         if (setor.getNome() == null ||
                 setor.getNome().isBlank()) {
@@ -58,7 +59,7 @@ public class SetorController {
     @PutMapping("/{id}")
     public ResponseEntity<Setor> atualizar(
             @PathVariable Integer id,
-            @RequestBody Setor dados) {
+           @Valid  @RequestBody Setor dados) {
 
         if (dados.getNome() == null ||
                 dados.getNome().isBlank()) {
