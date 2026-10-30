@@ -46,7 +46,7 @@ public class ServiceEquipamento {
             return Optional.empty();
         }
 
-        equipamento.setId(null);
+        
         equipamento.setSetor(setorEncontrado.get());
 
         return Optional.of(equipamentoRepository.save(equipamento));
