@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.ordensservico.aberturadeordendeservico.model.Equipamento;
 import br.com.ordensservico.aberturadeordendeservico.service.ServiceEquipamento;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/equipamentos")
@@ -23,7 +24,7 @@ public class EquipamentoController {
     // Cadastrar equipamento
     @PostMapping
     public ResponseEntity<Equipamento> cadastrar(
-            @RequestBody Equipamento equipamento) {
+            @Valid @RequestBody Equipamento equipamento) {
 
         if (equipamento.getNome() == null
                 || equipamento.getNome().isBlank()
@@ -64,7 +65,7 @@ public class EquipamentoController {
     @PutMapping("/{id}")
     public ResponseEntity<Equipamento> atualizar(
             @PathVariable Integer id,
-            @RequestBody Equipamento dados) {
+            @Valid @RequestBody Equipamento dados) {
 
         if (dados.getNome() == null
                 || dados.getNome().isBlank()
