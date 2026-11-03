@@ -30,7 +30,7 @@ public class Equipamento {
 
     @ManyToOne
     @JoinColumn(name = "setor_id", nullable = false)
-    @NotNull 
+    @NotNull (message ="Setor obrigatório")
     private Setor setor;
 
     public Equipamento() {

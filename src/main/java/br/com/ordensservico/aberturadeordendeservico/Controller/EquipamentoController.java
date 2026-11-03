@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.ordensservico.aberturadeordendeservico.dto.EquipamentoRequest;
 import br.com.ordensservico.aberturadeordendeservico.model.Equipamento;
 import br.com.ordensservico.aberturadeordendeservico.service.ServiceEquipamento;
 import jakarta.validation.Valid;
@@ -24,13 +25,13 @@ public class EquipamentoController {
     // Cadastrar equipamento
     @PostMapping
     public ResponseEntity<Equipamento> cadastrar(
-            @Valid @RequestBody Equipamento equipamento) {
+            @Valid @RequestBody EquipamentoRequest equipamento) {
 
         if (equipamento.getNome() == null
                 || equipamento.getNome().isBlank()
                 || equipamento.getNumeroPatrimonio() == null
                 || equipamento.getNumeroPatrimonio().isBlank()
-                || equipamento.getSetor() == null
+                || equipamento.getSetorId() == null
                 ) {
 
             return ResponseEntity.badRequest().build();
