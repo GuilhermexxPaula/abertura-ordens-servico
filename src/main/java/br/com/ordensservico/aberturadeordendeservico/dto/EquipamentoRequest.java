@@ -1,5 +1,8 @@
 package br.com.ordensservico.aberturadeordendeservico.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class EquipamentoRequest {
 
     private String nome;
@@ -11,6 +14,7 @@ public class EquipamentoRequest {
     }
 
     // Getters e Setters
+    @NotBlank (message = "O nome é obrigatório")
     public String getNome() {
         return nome;
     }
@@ -18,7 +22,7 @@ public class EquipamentoRequest {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+@NotBlank (message = "O numero é obrigatório")
     public String getNumeroPatrimonio() {
         return numeroPatrimonio;
     }
@@ -26,6 +30,9 @@ public class EquipamentoRequest {
     public void setNumeroPatrimonio(String numeroPatrimonio) {
         this.numeroPatrimonio = numeroPatrimonio;
     }
+
+
+  @NotNull (message ="Setor não existe")
 
     public Integer getSetorId() {
         return setorId;
