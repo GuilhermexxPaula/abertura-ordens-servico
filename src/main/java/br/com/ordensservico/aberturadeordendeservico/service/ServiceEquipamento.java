@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.ordensservico.aberturadeordendeservico.dto.EquipamentoRequest;
 import br.com.ordensservico.aberturadeordendeservico.model.Equipamento;
 import br.com.ordensservico.aberturadeordendeservico.model.Setor;
 import br.com.ordensservico.aberturadeordendeservico.repository.EquipamentoRepository;
@@ -26,30 +27,34 @@ public class ServiceEquipamento {
     }
 
     // Cadastrar equipamento
-    public Optional<Equipamento> cadastrar(Equipamento equipamento) {
+    public Optional<Equipamento> cadastrar(EquipamentoRequest equipamento) {
 
         if (equipamento == null
                 || equipamento.getNome() == null
                 || equipamento.getNome().isBlank()
                 || equipamento.getNumeroPatrimonio() == null
                 || equipamento.getNumeroPatrimonio().isBlank()
-                || equipamento.getSetor() == null
-                ) {
+                || equipamento.getSetorId() == null) {
 
             return Optional.empty();
         }
 
         Optional<Setor> setorEncontrado =
-                setorRepository.findById(equipamento.getSetor().getId());
+                setorRepository.findById(equipamento.getSetorId());
 
         if (setorEncontrado.isEmpty()) {
             return Optional.empty();
         }
 
-        
-        equipamento.setSetor(setorEncontrado.get());
+        Equipamento novoEquipamento = new Equipamento();
 
-        return Optional.of(equipamentoRepository.save(equipamento));
+        novoEquipamento.setNome(equipamento.getNome());
+        novoEquipamento.setNumeroPatrimonio(
+                equipamento.getNumeroPatrimonio());
+        novoEquipamento.setSetor(setorEncontrado.get());
+
+        return Optional.of(
+                equipamentoRepository.save(novoEquipamento));
     }
 
     // Listar todos os equipamentos
@@ -71,7 +76,8 @@ public class ServiceEquipamento {
     public Optional<Equipamento> atualizar(
             Integer id, Equipamento dados) {
 
-        if (id == null || dados == null
+        if (id == null
+                || dados == null
                 || dados.getNome() == null
                 || dados.getNome().isBlank()
                 || dados.getNumeroPatrimonio() == null
@@ -99,8 +105,10 @@ public class ServiceEquipamento {
         Equipamento equipamento = equipamentoEncontrado.get();
 
         equipamento.setNome(dados.getNome());
+
         equipamento.setNumeroPatrimonio(
                 dados.getNumeroPatrimonio());
+
         equipamento.setSetor(setorEncontrado.get());
 
         return Optional.of(
@@ -112,11 +120,14 @@ public class ServiceEquipamento {
 
         if (id == null
                 || !equipamentoRepository.existsById(id)) {
+
             return false;
         }
 
         equipamentoRepository.deleteById(id);
+
         return true;
     }
 }
+
 
